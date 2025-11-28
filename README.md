@@ -8,7 +8,7 @@ A modular Bubble Tea dashboard inspired by wtfutil and built with Charmbracelet 
 - **Moon Phase** – wttr.in `/moon` view with customizable parameters through `WTTR_MOON_PARAMS`.
 - **System** – CPU, memory, disk usage, Go runtime version, and SMART availability hint.
 - **IP Info** – Active interface addresses.
-- **Markdown** – Renders Markdown through Glow. Provide `MARKDOWN_PATH` to point at a local file.
+- **Markdown** – Renders Markdown through Glamour (the renderer used by Glow). Provide `MARKDOWN_PATH` to point at a local file.
 - **GitHub** – Authenticated profile summary when `GITHUB_TOKEN` is set.
 - **GitLab** – Authenticated profile summary when `GITLAB_TOKEN` is set.
 
@@ -23,7 +23,7 @@ A modular Bubble Tea dashboard inspired by wtfutil and built with Charmbracelet 
    - `WTTR_PARAMS` – Optional query string appended to the weather request (defaults to `format=3`).
    - `WTTR_MOON_LOCATION` – Override the `/moon` endpoint segment if you want a location-specific moon forecast.
    - `WTTR_MOON_PARAMS` – Optional query string appended to the moon request (defaults to `format=Moon:+%m`).
-   - `MARKDOWN_PATH` – Path to a Markdown file rendered by Glow.
+   - `MARKDOWN_PATH` – Path to a Markdown file rendered by Glamour (used by Glow).
    - `GITHUB_TOKEN` – Personal access token for private/public GitHub data.
    - `GITLAB_TOKEN` – Personal access token for GitLab profile data.
 

@@ -10,9 +10,9 @@ import (
 )
 
 const defaultMarkdown = "# Welcome to GoTUI\n\n" +
-	"Use `MARKDOWN_PATH` to point at a local file. This widget renders Markdown using Glow so you can keep notes, dashboards, and runbooks nearby.\n"
+	"Use `MARKDOWN_PATH` to point at a local file. This widget renders Markdown using Glamour (the renderer behind Glow) so you can keep notes, dashboards, and runbooks nearby.\n"
 
-// markdownWidget shows rendered markdown content using Glow.
+// markdownWidget shows rendered markdown content using Glamour (Glow's renderer).
 type markdownWidget struct {
 	content string
 	width   int
