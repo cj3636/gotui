@@ -59,14 +59,14 @@ func (w *TextViewerWidget) loadFile() tea.Cmd {
 			w.err = err
 			return nil
 		}
-		
+
 		// Limit content to first 100 lines to avoid overwhelming the display
 		lines := strings.Split(string(data), "\n")
 		if len(lines) > 100 {
 			lines = lines[:100]
 			lines = append(lines, "... (truncated)")
 		}
-		
+
 		w.content = strings.Join(lines, "\n")
 		return nil
 	}

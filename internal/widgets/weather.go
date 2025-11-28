@@ -13,10 +13,10 @@ import (
 // WeatherWidget displays weather information from wttr.in
 type WeatherWidget struct {
 	BaseWidget
-	location      string
-	weatherData   string
-	err           error
-	lastUpdate    time.Time
+	location       string
+	weatherData    string
+	err            error
+	lastUpdate     time.Time
 	updateInterval time.Duration
 }
 
@@ -80,10 +80,10 @@ func (w *WeatherWidget) fetchWeather() tea.Cmd {
 	return func() tea.Msg {
 		// Format location for wttr.in (replace spaces with +)
 		location := strings.ReplaceAll(w.location, " ", "+")
-		
+
 		// Request weather data in plain text format with custom formatting
 		url := fmt.Sprintf("https://wttr.in/%s?format=%%l:+%%C+%%t\n%%w\n%%p\n%%h", location)
-		
+
 		resp, err := http.Get(url)
 		if err != nil {
 			return WeatherMsg{err: err}
@@ -96,7 +96,7 @@ func (w *WeatherWidget) fetchWeather() tea.Cmd {
 		}
 
 		data := string(body)
-		
+
 		// Clean up the data
 		lines := strings.Split(data, "\n")
 		var cleaned []string
@@ -106,9 +106,9 @@ func (w *WeatherWidget) fetchWeather() tea.Cmd {
 				cleaned = append(cleaned, line)
 			}
 		}
-		
+
 		result := strings.Join(cleaned, "\n")
-		
+
 		return WeatherMsg{data: result}
 	}
 }

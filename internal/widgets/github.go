@@ -101,7 +101,7 @@ func (w *GithubWidget) View() string {
 func (w *GithubWidget) fetchGithubInfo() tea.Cmd {
 	return func() tea.Msg {
 		ctx := context.Background()
-		
+
 		var client *github.Client
 		if w.token != "" {
 			ts := oauth2.StaticTokenSource(

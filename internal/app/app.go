@@ -158,9 +158,9 @@ func (m Model) View() string {
 	helpStyle := lipgloss.NewStyle().
 		Foreground(lipgloss.Color("241")).
 		Align(lipgloss.Center)
-	
+
 	help := helpStyle.Render("Press 'q', 'Esc', or 'Ctrl+C' to quit")
-	
+
 	return view + "\n" + help
 }
 

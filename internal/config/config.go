@@ -9,15 +9,15 @@ import (
 
 // Config holds the application configuration
 type Config struct {
-	GithubToken      string              `yaml:"github_token"`
-	GitlabToken      string              `yaml:"gitlab_token"`
-	WeatherLocation  string              `yaml:"weather_location"`
-	RefreshIntervals RefreshIntervals    `yaml:"refresh_intervals"`
-	GithubRepos      []string            `yaml:"github_repos"`
-	GitlabProjects   []string            `yaml:"gitlab_projects"`
-	TextFile         string              `yaml:"text_file"`
-	MarkdownFile     string              `yaml:"markdown_file"`
-	Layout           Layout              `yaml:"layout"`
+	GithubToken      string           `yaml:"github_token"`
+	GitlabToken      string           `yaml:"gitlab_token"`
+	WeatherLocation  string           `yaml:"weather_location"`
+	RefreshIntervals RefreshIntervals `yaml:"refresh_intervals"`
+	GithubRepos      []string         `yaml:"github_repos"`
+	GitlabProjects   []string         `yaml:"gitlab_projects"`
+	TextFile         string           `yaml:"text_file"`
+	MarkdownFile     string           `yaml:"markdown_file"`
+	Layout           Layout           `yaml:"layout"`
 }
 
 // RefreshIntervals defines how often each widget refreshes (in seconds)

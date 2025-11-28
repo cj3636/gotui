@@ -50,27 +50,27 @@ func (w *CalendarWidget) View() string {
 func (w *CalendarWidget) generateCalendar() string {
 	now := w.currentTime
 	year, month, _ := now.Date()
-	
+
 	// Get the first day of the month
 	firstDay := time.Date(year, month, 1, 0, 0, 0, 0, now.Location())
-	
+
 	// Get the last day of the month
 	lastDay := firstDay.AddDate(0, 1, -1)
-	
+
 	var sb strings.Builder
-	
+
 	// Month and year header
 	sb.WriteString(fmt.Sprintf("%s %d\n\n", month, year))
-	
+
 	// Day headers
 	sb.WriteString("Su Mo Tu We Th Fr Sa\n")
-	
+
 	// Add padding for the first week
 	startWeekday := int(firstDay.Weekday())
 	for i := 0; i < startWeekday; i++ {
 		sb.WriteString("   ")
 	}
-	
+
 	// Add days
 	today := now.Day()
 	for day := 1; day <= lastDay.Day(); day++ {
@@ -79,7 +79,7 @@ func (w *CalendarWidget) generateCalendar() string {
 		} else {
 			sb.WriteString(fmt.Sprintf("%2d ", day))
 		}
-		
+
 		weekday := (startWeekday + day - 1) % 7
 		if weekday == 6 && day != lastDay.Day() {
 			sb.WriteString("\n")
@@ -87,6 +87,6 @@ func (w *CalendarWidget) generateCalendar() string {
 			sb.WriteString(" ")
 		}
 	}
-	
+
 	return sb.String()
 }

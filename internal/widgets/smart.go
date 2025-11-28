@@ -50,7 +50,7 @@ func (w *SMARTWidget) fetchSMARTData() tea.Cmd {
 	return func() tea.Msg {
 		// Check if smartctl is available
 		var cmd *exec.Cmd
-		
+
 		if runtime.GOOS == "linux" {
 			// Try to get basic disk info without root
 			cmd = exec.Command("df", "-h", "/")
@@ -78,7 +78,7 @@ func (w *SMARTWidget) fetchSMARTData() tea.Cmd {
 				result = append(result, "")
 				result = append(result, strings.Join(fields[:5], " "))
 			}
-			
+
 			dataFields := strings.Fields(lines[1])
 			if len(dataFields) >= 5 {
 				result = append(result, strings.Join(dataFields[:5], " "))
