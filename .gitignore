@@ -1,14 +1,14 @@
-# Binaries for programs and plugins
+# Binaries
+gotui
 *.exe
-*.exe~
 *.dll
 *.so
 *.dylib
 
-# Test binary, built with `go test -c`
+# Test binaries
 *.test
 
-# Output of the go coverage tool, specifically when used with LiteIDE
+# Output of the go coverage tool
 *.out
 
 # Dependency directories
@@ -17,14 +17,9 @@ vendor/
 # Go workspace file
 go.work
 
-# Build artifacts
-gotui
-/bin/
-/dist/
-
 # IDE specific files
-.idea/
 .vscode/
+.idea/
 *.swp
 *.swo
 *~
