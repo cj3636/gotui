@@ -16,6 +16,12 @@ type TextViewerWidget struct {
 	err      error
 }
 
+// TextMsg contains text file content
+type TextMsg struct {
+	content string
+	err     error
+}
+
 // NewTextViewerWidget creates a new text viewer widget
 func NewTextViewerWidget(filename string) *TextViewerWidget {
 	return &TextViewerWidget{
@@ -34,6 +40,15 @@ func (w *TextViewerWidget) Init() tea.Cmd {
 
 // Update handles messages
 func (w *TextViewerWidget) Update(msg tea.Msg) (Widget, tea.Cmd) {
+	switch msg := msg.(type) {
+	case TextMsg:
+		if msg.err != nil {
+			w.err = msg.err
+		} else {
+			w.content = msg.content
+			w.err = nil
+		}
+	}
 	return w, nil
 }
 
@@ -56,8 +71,7 @@ func (w *TextViewerWidget) loadFile() tea.Cmd {
 	return func() tea.Msg {
 		data, err := os.ReadFile(w.filename)
 		if err != nil {
-			w.err = err
-			return nil
+			return TextMsg{err: err}
 		}
 
 		// Limit content to first 100 lines to avoid overwhelming the display
@@ -67,7 +81,7 @@ func (w *TextViewerWidget) loadFile() tea.Cmd {
 			lines = append(lines, "... (truncated)")
 		}
 
-		w.content = strings.Join(lines, "\n")
-		return nil
+		content := strings.Join(lines, "\n")
+		return TextMsg{content: content}
 	}
 }

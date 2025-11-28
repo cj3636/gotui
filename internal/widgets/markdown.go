@@ -17,6 +17,12 @@ type MarkdownWidget struct {
 	err      error
 }
 
+// MarkdownMsg contains rendered markdown content
+type MarkdownMsg struct {
+	content string
+	err     error
+}
+
 // NewMarkdownWidget creates a new markdown viewer widget
 func NewMarkdownWidget(filename string) *MarkdownWidget {
 	return &MarkdownWidget{
@@ -35,6 +41,15 @@ func (w *MarkdownWidget) Init() tea.Cmd {
 
 // Update handles messages
 func (w *MarkdownWidget) Update(msg tea.Msg) (Widget, tea.Cmd) {
+	switch msg := msg.(type) {
+	case MarkdownMsg:
+		if msg.err != nil {
+			w.err = msg.err
+		} else {
+			w.content = msg.content
+			w.err = nil
+		}
+	}
 	return w, nil
 }
 
@@ -57,8 +72,7 @@ func (w *MarkdownWidget) loadMarkdown() tea.Cmd {
 	return func() tea.Msg {
 		data, err := os.ReadFile(w.filename)
 		if err != nil {
-			w.err = err
-			return nil
+			return MarkdownMsg{err: err}
 		}
 
 		// Use glamour to render markdown
@@ -67,14 +81,12 @@ func (w *MarkdownWidget) loadMarkdown() tea.Cmd {
 			glamour.WithWordWrap(60),
 		)
 		if err != nil {
-			w.err = err
-			return nil
+			return MarkdownMsg{err: err}
 		}
 
 		rendered, err := r.Render(string(data))
 		if err != nil {
-			w.err = err
-			return nil
+			return MarkdownMsg{err: err}
 		}
 
 		// Limit content to avoid overwhelming the display
@@ -84,7 +96,7 @@ func (w *MarkdownWidget) loadMarkdown() tea.Cmd {
 			lines = append(lines, "... (truncated)")
 		}
 
-		w.content = strings.Join(lines, "\n")
-		return nil
+		content := strings.Join(lines, "\n")
+		return MarkdownMsg{content: content}
 	}
 }

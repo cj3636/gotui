@@ -16,6 +16,12 @@ type SMARTWidget struct {
 	err       error
 }
 
+// SMARTMsg contains SMART data
+type SMARTMsg struct {
+	data string
+	err  error
+}
+
 // NewSMARTWidget creates a new SMART status widget
 func NewSMARTWidget() *SMARTWidget {
 	return &SMARTWidget{
@@ -30,6 +36,15 @@ func (w *SMARTWidget) Init() tea.Cmd {
 
 // Update handles messages
 func (w *SMARTWidget) Update(msg tea.Msg) (Widget, tea.Cmd) {
+	switch msg := msg.(type) {
+	case SMARTMsg:
+		if msg.err != nil {
+			w.err = msg.err
+		} else {
+			w.smartData = msg.data
+			w.err = nil
+		}
+	}
 	return w, nil
 }
 
@@ -57,14 +72,12 @@ func (w *SMARTWidget) fetchSMARTData() tea.Cmd {
 		} else if runtime.GOOS == "darwin" {
 			cmd = exec.Command("df", "-h", "/")
 		} else {
-			w.err = fmt.Errorf("SMART monitoring not supported on %s", runtime.GOOS)
-			return nil
+			return SMARTMsg{err: fmt.Errorf("SMART monitoring not supported on %s", runtime.GOOS)}
 		}
 
 		output, err := cmd.CombinedOutput()
 		if err != nil {
-			w.err = err
-			return nil
+			return SMARTMsg{err: err}
 		}
 
 		// Parse disk information
@@ -106,7 +119,7 @@ func (w *SMARTWidget) fetchSMARTData() tea.Cmd {
 			result = append(result, "for detailed SMART data")
 		}
 
-		w.smartData = strings.Join(result, "\n")
-		return nil
+		data := strings.Join(result, "\n")
+		return SMARTMsg{data: data}
 	}
 }
