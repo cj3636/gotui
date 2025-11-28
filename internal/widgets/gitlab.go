@@ -62,7 +62,8 @@ func (w *GitlabWidget) Update(msg tea.Msg) (Widget, tea.Cmd) {
 		}
 		w.lastUpdate = time.Now()
 		return w, tea.Tick(w.updateInterval, func(t time.Time) tea.Msg {
-			return w.fetchGitlabInfo()()
+			cmd := w.fetchGitlabInfo()
+			return cmd()
 		})
 	}
 	return w, nil

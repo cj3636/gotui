@@ -61,7 +61,8 @@ func (w *IPWidget) Update(msg tea.Msg) (Widget, tea.Cmd) {
 		}
 		w.lastUpdate = time.Now()
 		return w, tea.Tick(w.updateInterval, func(t time.Time) tea.Msg {
-			return w.fetchIPInfo()()
+			cmd := w.fetchIPInfo()
+			return cmd()
 		})
 	}
 	return w, nil

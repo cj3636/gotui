@@ -37,7 +37,7 @@ func (w *SMARTWidget) Update(msg tea.Msg) (Widget, tea.Cmd) {
 func (w *SMARTWidget) View() string {
 	var content string
 	if w.err != nil {
-		content = fmt.Sprintf("Error: %v\n\nNote: SMART data requires\nsmarttmontools and root access", w.err)
+		content = fmt.Sprintf("Error: %v\n\nNote: SMART data requires\nsmartmontools and root access", w.err)
 	} else if w.smartData == "" {
 		content = "Loading SMART data..."
 	} else {

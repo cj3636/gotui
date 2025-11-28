@@ -60,7 +60,8 @@ func (w *SystemWidget) Update(msg tea.Msg) (Widget, tea.Cmd) {
 		w.diskUsed = msg.diskUsed
 		w.diskTotal = msg.diskTotal
 		return w, tea.Tick(w.updateInterval, func(t time.Time) tea.Msg {
-			return w.fetchSystemInfo()()
+			cmd := w.fetchSystemInfo()
+			return cmd()
 		})
 	}
 	return w, nil

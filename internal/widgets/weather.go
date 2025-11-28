@@ -54,7 +54,8 @@ func (w *WeatherWidget) Update(msg tea.Msg) (Widget, tea.Cmd) {
 		}
 		w.lastUpdate = time.Now()
 		return w, tea.Tick(w.updateInterval, func(t time.Time) tea.Msg {
-			return w.fetchWeather()()
+			cmd := w.fetchWeather()
+			return cmd()
 		})
 	}
 	return w, nil
