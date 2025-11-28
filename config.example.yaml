@@ -1,0 +1,56 @@
+# GoTUI Dashboard Configuration Example
+# Copy this file to config.yaml and customize it for your needs
+
+# GitHub API Token (optional - for private repositories)
+# Create at: https://github.com/settings/tokens
+# Required scopes: repo (for private repos)
+github_token: ""
+
+# GitLab API Token (optional - for private repositories)
+# Create at: https://gitlab.com/-/profile/personal_access_tokens
+# Required scopes: read_api, read_repository
+gitlab_token: ""
+
+# Weather location (city name, coordinates, or airport code)
+# Examples: "New York", "London", "48.8566,2.3522", "JFK"
+weather_location: "New York"
+
+# Refresh intervals (in seconds)
+refresh_intervals:
+  weather: 1800      # 30 minutes - weather data
+  github: 300        # 5 minutes - GitHub repositories
+  gitlab: 300        # 5 minutes - GitLab projects
+  system: 5          # 5 seconds - system resources
+  ip: 3600           # 1 hour - IP information
+
+# GitHub repositories to monitor (format: "owner/repo")
+github_repos:
+  - "charmbracelet/bubbletea"
+  - "charmbracelet/lipgloss"
+  - "charmbracelet/glamour"
+
+# GitLab projects to monitor (format: "namespace/project")
+# Examples: "gitlab-org/gitlab", "your-username/your-project"
+gitlab_projects: []
+
+# Text file to display (full path or relative path)
+# Example: "/var/log/syslog", "./notes.txt"
+text_file: ""
+
+# Markdown file to display (full path or relative path)
+# Example: "./README.md", "/home/user/notes.md"
+markdown_file: "example.md"
+
+# Widget layout configuration
+# Total widgets displayed = rows × cols
+# Widgets are placed left-to-right, top-to-bottom
+layout:
+  rows: 3    # Number of rows in the grid
+  cols: 3    # Number of columns in the grid
+
+# Notes:
+# - Leave github_repos empty if you don't want the GitHub widget
+# - Leave gitlab_projects empty if you don't want the GitLab widget
+# - Set text_file or markdown_file to "" to disable those widgets
+# - Adjust refresh_intervals based on your needs and API rate limits
+# - The application automatically handles terminal resizing
