@@ -26,6 +26,9 @@ type WeatherMsg struct {
 	err  error
 }
 
+// WeatherRefreshMsg signals it's time to refresh the weather
+type WeatherRefreshMsg struct{}
+
 // NewWeatherWidget creates a new weather widget
 func NewWeatherWidget(location string, refreshInterval int) *WeatherWidget {
 	return &WeatherWidget{
@@ -54,9 +57,10 @@ func (w *WeatherWidget) Update(msg tea.Msg) (Widget, tea.Cmd) {
 		}
 		w.lastUpdate = time.Now()
 		return w, tea.Tick(w.updateInterval, func(t time.Time) tea.Msg {
-			cmd := w.fetchWeather()
-			return cmd()
+			return WeatherRefreshMsg{}
 		})
+	case WeatherRefreshMsg:
+		return w, w.fetchWeather()
 	}
 	return w, nil
 }

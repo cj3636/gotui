@@ -36,6 +36,9 @@ type IPMsg struct {
 	err  error
 }
 
+// IPRefreshMsg signals it's time to refresh IP info
+type IPRefreshMsg struct{}
+
 // NewIPWidget creates a new IP information widget
 func NewIPWidget(refreshInterval int) *IPWidget {
 	return &IPWidget{
@@ -61,9 +64,10 @@ func (w *IPWidget) Update(msg tea.Msg) (Widget, tea.Cmd) {
 		}
 		w.lastUpdate = time.Now()
 		return w, tea.Tick(w.updateInterval, func(t time.Time) tea.Msg {
-			cmd := w.fetchIPInfo()
-			return cmd()
+			return IPRefreshMsg{}
 		})
+	case IPRefreshMsg:
+		return w, w.fetchIPInfo()
 	}
 	return w, nil
 }

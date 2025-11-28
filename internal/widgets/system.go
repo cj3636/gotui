@@ -35,6 +35,9 @@ type SystemMsg struct {
 	diskTotal   uint64
 }
 
+// SystemRefreshMsg signals it's time to refresh system info
+type SystemRefreshMsg struct{}
+
 // NewSystemWidget creates a new system resource widget
 func NewSystemWidget(refreshInterval int) *SystemWidget {
 	return &SystemWidget{
@@ -60,9 +63,10 @@ func (w *SystemWidget) Update(msg tea.Msg) (Widget, tea.Cmd) {
 		w.diskUsed = msg.diskUsed
 		w.diskTotal = msg.diskTotal
 		return w, tea.Tick(w.updateInterval, func(t time.Time) tea.Msg {
-			cmd := w.fetchSystemInfo()
-			return cmd()
+			return SystemRefreshMsg{}
 		})
+	case SystemRefreshMsg:
+		return w, w.fetchSystemInfo()
 	}
 	return w, nil
 }

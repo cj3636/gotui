@@ -35,6 +35,9 @@ type GitlabMsg struct {
 	err      error
 }
 
+// GitlabRefreshMsg signals it's time to refresh GitLab info
+type GitlabRefreshMsg struct{}
+
 // NewGitlabWidget creates a new GitLab widget
 func NewGitlabWidget(token string, projects []string, refreshInterval int) *GitlabWidget {
 	return &GitlabWidget{
@@ -62,9 +65,10 @@ func (w *GitlabWidget) Update(msg tea.Msg) (Widget, tea.Cmd) {
 		}
 		w.lastUpdate = time.Now()
 		return w, tea.Tick(w.updateInterval, func(t time.Time) tea.Msg {
-			cmd := w.fetchGitlabInfo()
-			return cmd()
+			return GitlabRefreshMsg{}
 		})
+	case GitlabRefreshMsg:
+		return w, w.fetchGitlabInfo()
 	}
 	return w, nil
 }

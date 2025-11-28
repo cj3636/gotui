@@ -38,6 +38,9 @@ type GithubMsg struct {
 	err   error
 }
 
+// GithubRefreshMsg signals it's time to refresh GitHub info
+type GithubRefreshMsg struct{}
+
 // NewGithubWidget creates a new GitHub widget
 func NewGithubWidget(token string, repos []string, refreshInterval int) *GithubWidget {
 	return &GithubWidget{
@@ -65,9 +68,10 @@ func (w *GithubWidget) Update(msg tea.Msg) (Widget, tea.Cmd) {
 		}
 		w.lastUpdate = time.Now()
 		return w, tea.Tick(w.updateInterval, func(t time.Time) tea.Msg {
-			cmd := w.fetchGithubInfo()
-			return cmd()
+			return GithubRefreshMsg{}
 		})
+	case GithubRefreshMsg:
+		return w, w.fetchGithubInfo()
 	}
 	return w, nil
 }
