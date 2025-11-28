@@ -66,10 +66,8 @@ func (w *SMARTWidget) fetchSMARTData() tea.Cmd {
 		// Check if smartctl is available
 		var cmd *exec.Cmd
 
-		if runtime.GOOS == "linux" {
+		if runtime.GOOS == "linux" || runtime.GOOS == "darwin" {
 			// Try to get basic disk info without root
-			cmd = exec.Command("df", "-h", "/")
-		} else if runtime.GOOS == "darwin" {
 			cmd = exec.Command("df", "-h", "/")
 		} else {
 			return SMARTMsg{err: fmt.Errorf("SMART monitoring not supported on %s", runtime.GOOS)}

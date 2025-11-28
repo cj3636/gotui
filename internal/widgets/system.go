@@ -94,29 +94,29 @@ func (w *SystemWidget) View() string {
 func (w *SystemWidget) fetchSystemInfo() tea.Cmd {
 	return func() tea.Msg {
 		// Get CPU percentage
-		cpuPercentages, _ := cpu.Percent(time.Second, false)
+		cpuPercentages, err := cpu.Percent(time.Second, false)
 		cpuPercent := 0.0
-		if len(cpuPercentages) > 0 {
+		if err == nil && len(cpuPercentages) > 0 {
 			cpuPercent = cpuPercentages[0]
 		}
 
 		// Get memory stats
-		memStats, _ := mem.VirtualMemory()
+		memStats, err := mem.VirtualMemory()
 		memPercent := 0.0
 		memUsed := uint64(0)
 		memTotal := uint64(0)
-		if memStats != nil {
+		if err == nil && memStats != nil {
 			memPercent = memStats.UsedPercent
 			memUsed = memStats.Used
 			memTotal = memStats.Total
 		}
 
 		// Get disk stats
-		diskStats, _ := disk.Usage("/")
+		diskStats, err := disk.Usage("/")
 		diskPercent := 0.0
 		diskUsed := uint64(0)
 		diskTotal := uint64(0)
-		if diskStats != nil {
+		if err == nil && diskStats != nil {
 			diskPercent = diskStats.UsedPercent
 			diskUsed = diskStats.Used
 			diskTotal = diskStats.Total

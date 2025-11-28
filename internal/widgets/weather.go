@@ -87,6 +87,7 @@ func (w *WeatherWidget) fetchWeather() tea.Cmd {
 		location := strings.ReplaceAll(w.location, " ", "+")
 
 		// Request weather data in plain text format with custom formatting
+		// Format codes: %l=location, %C=condition, %t=temperature, %w=wind, %p=precipitation, %h=humidity
 		url := fmt.Sprintf("https://wttr.in/%s?format=%%l:+%%C+%%t\n%%w\n%%p\n%%h", location)
 
 		resp, err := http.Get(url)

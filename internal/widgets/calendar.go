@@ -81,8 +81,10 @@ func (w *CalendarWidget) generateCalendar() string {
 		}
 
 		weekday := (startWeekday + day - 1) % 7
-		if weekday == 6 && day != lastDay.Day() {
-			sb.WriteString("\n")
+		if weekday == 6 {
+			if day != lastDay.Day() {
+				sb.WriteString("\n")
+			}
 		} else {
 			sb.WriteString(" ")
 		}
