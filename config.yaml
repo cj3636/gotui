@@ -1,0 +1,37 @@
+# GoTUI Dashboard Configuration
+
+# GitHub API Token (optional - for private repositories)
+github_token: ""
+
+# GitLab API Token (optional - for private repositories)
+gitlab_token: ""
+
+# Weather location (city name or coordinates)
+weather_location: "New York"
+
+# Refresh intervals (in seconds)
+refresh_intervals:
+  weather: 1800      # 30 minutes
+  github: 300        # 5 minutes
+  gitlab: 300        # 5 minutes
+  system: 5          # 5 seconds
+  ip: 3600           # 1 hour
+
+# GitHub repositories to monitor (format: "owner/repo")
+github_repos:
+  - "charmbracelet/bubbletea"
+  - "charmbracelet/lipgloss"
+
+# GitLab projects to monitor (format: "namespace/project")
+gitlab_projects: []
+
+# Text file to display
+text_file: ""
+
+# Markdown file to display
+markdown_file: "example.md"
+
+# Widget layout configuration
+layout:
+  rows: 3
+  cols: 3
